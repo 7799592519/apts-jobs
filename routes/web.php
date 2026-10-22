@@ -22,4 +22,11 @@ Route::get('/category/{slug}', function($slug){
    $jobs = $category->jobs()->latest()->get();
    return view('category_jobs', compact('category', 'jobs'));
 })->name('category.show');
+Route::get('/sitemap.xml', function () {
+    $jobs = Job::latest()->get();
+    $categories = Category::all();
+
+    // text/xml ఫార్మాట్ లో పంపుతున్నాం
+    return response()->view('sitemap', compact('jobs', 'categories'))->header('Content-Type', 'text/xml');
+});
 
